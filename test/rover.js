@@ -41,3 +41,14 @@ test('should stream specific indexes', async (t) => {
   const fourth = await iterator.next()
   t.equal(fourth.done, true)
 })
+
+test('stream should fail if index -1 requested', async (t) => {
+  const iterator = termrover.stream(-1, 2)
+  try {
+    await iterator.next()
+  } catch (err) {
+    t.equal(err.response.status, 404)
+    return
+  }
+  t.fail('should throw error')
+})
